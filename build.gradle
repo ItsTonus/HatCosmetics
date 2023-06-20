@@ -1,10 +1,10 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -18,13 +18,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.tr7zw:item-nbt-api:2.10.0'
-    implementation 'org.jetbrains:annotations:20.1.0'
-    compileOnly 'org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT'
+    implementation 'de.tr7zw:item-nbt-api:2.11.3'
+    implementation 'org.jetbrains:annotations:24.0.1'
+    compileOnly 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
 }
 
 group = 'me.Tonus_'
-version = '1.2.0-b4'
+version = '1.2.0-b5'
 sourceCompatibility = '1.8'
 
 shadowJar {
