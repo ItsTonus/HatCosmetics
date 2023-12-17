@@ -30,5 +30,5 @@ sourceCompatibility = '1.8'
 shadowJar {
     minimize()
     archiveClassifier.set("")
-    relocate('de.tr7zw', 'me.Tonus_.hatCosmetics.libs.nbt-api')
+    relocate('de.tr7zw.changeme.nbtapi', 'me.Tonus_.hatCosmetics.libs.nbt-api')
 }
