@@ -1,6 +1,6 @@
 package me.Tonus_.hatCosmetics.events;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTItem;
 import me.Tonus_.hatCosmetics.Main;
 import me.Tonus_.hatCosmetics.manager.MessageManager;
 import org.bukkit.ChatColor;
