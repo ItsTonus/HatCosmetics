@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -244,7 +243,6 @@ public class InventoryManager {
             }
 
             if(currentHat != null && nbti.getString("Permission").equals("hatcosmetics.hat." + currentHat)) {
-                GUIItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                 ItemMeta hatMeta = GUIItem.getItemMeta();
                 assert hatMeta != null;
                 List<String> lore = hatMeta.getLore();
