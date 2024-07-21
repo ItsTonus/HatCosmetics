@@ -4,17 +4,17 @@ import de.tr7zw.nbtapi.NBTItem;
 import me.Tonus_.hatCosmetics.manager.InventoryManager;
 import me.Tonus_.hatCosmetics.Main;
 import me.Tonus_.hatCosmetics.manager.MessageManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
@@ -28,6 +28,49 @@ public class InventoryEvents implements Listener {
         this.main = main;
         this.messageManager = main.getMessageManager();
         this.inventoryManager = main.getInventoryManager();
+    }
+
+    @EventHandler
+    public void onRightClickWithHelmet(PlayerInteractEvent event) {
+        if (!isRightClickAction(event.getAction()) || !isHelmet(event.getMaterial())) return;
+
+        Player player = event.getPlayer();
+        PlayerInventory inventory = player.getInventory();
+        ItemStack currentHelmet = inventory.getHelmet();
+        ItemStack newHelmet = event.getItem();
+
+        if (currentHelmet == null || newHelmet == null || !isHatCosmetic(currentHelmet)) return;
+
+        event.setCancelled(true);
+
+        player.playSound(player.getLocation(), getEquipSoundForMaterial(newHelmet.getType()), 1, 1);
+        inventory.setHelmet(inventory.getItemInMainHand());
+        inventory.setItemInMainHand(null);
+    }
+
+    private boolean isHelmet(Material material) {
+        return material.name().endsWith("_HELMET");
+    }
+
+    private boolean isRightClickAction(Action action) {
+        return action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK;
+    }
+
+    private boolean isHatCosmetic(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null || !meta.hasLore()) return false;
+
+        List<String> lore = meta.getLore();
+        return lore != null && lore.get(0).contains("Hat Cosmetic");
+    }
+
+    private Sound getEquipSoundForMaterial(Material material) {
+        try {
+            String materialType = material.toString().replace("_HELMET", "");
+            return Sound.valueOf("ITEM_ARMOR_EQUIP_" + materialType);
+        } catch (IllegalArgumentException e) {
+            return Sound.ITEM_ARMOR_EQUIP_GENERIC;
+        }
     }
 
     @EventHandler
