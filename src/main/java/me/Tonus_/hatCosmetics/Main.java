@@ -13,9 +13,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements Listener {
     private final HashMap<Player, ItemStack> droppedCosmetic = new HashMap<>();
@@ -33,6 +35,14 @@ public class Main extends JavaPlugin implements Listener {
 
     public ConfigManager getConfigManager() { return configManager; }
 
+    public static @NotNull Main getInstance() {
+        return getPlugin(Main.class);
+    }
+
+    public @NotNull Logger getLogger() {
+        return super.getLogger();
+    }
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
@@ -46,20 +56,7 @@ public class Main extends JavaPlugin implements Listener {
         new Metrics(this, 11075);
 
         // Check for new updates
-        new UpdateManager(this, 83111).getSpigotVersion(version -> {
-            if(this.getDescription().getVersion().equals(version)) {
-                getLogger().info("Server is running the latest version available!");
-            }
-            else {
-                getLogger().info("An update for HatCosmetics (" + version + ") is available at:");
-                getLogger().info("https://www.spigotmc.org/resources/hatcosmetics.83111/");
-            }
-        });
-    }
-
-    @Override
-    public void onDisable() {
-
+        VersionChecker.checkForUpdates("4h6EFh3D");
     }
 
     // Ensure cosmetics don't drop if the player dies
