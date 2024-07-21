@@ -5,7 +5,6 @@ import me.Tonus_.hatCosmetics.events.MainHatsCommand;
 import me.Tonus_.hatCosmetics.manager.ConfigManager;
 import me.Tonus_.hatCosmetics.manager.InventoryManager;
 import me.Tonus_.hatCosmetics.manager.MessageManager;
-import me.Tonus_.hatCosmetics.manager.UpdateManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
